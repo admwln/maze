@@ -1,62 +1,26 @@
 ﻿using ConsoleApp1;
 
 var game = new Game();
+
 Console.Write("Player 1, choose your name: ");
-var name = Console.ReadLine();
-var playerOne = new Player(name);
+var nameOne = Console.ReadLine();
+var playerOne = new Player(nameOne, ConsoleColor.Cyan, 2, 25);
+Console.Write("Player 2, choose your name: ");
+var nameTwo = Console.ReadLine();
+var playerTwo = new Player(nameTwo, ConsoleColor.Magenta, 3, 0);
+
 Console.WriteLine("Press Enter to play!");
 Console.ReadLine();
-var maze = new Maze(playerOne);
-game.Start();
+var maze = new Maze(playerOne, playerTwo);
+
 maze.Draw();
-Console.SetCursorPosition(0,22);
-Console.WriteLine($"{playerOne.Name}: {playerOne.Score}");
-while ( ! game.GameOver)
-{
-    // Listen to keys
-    var ch = Console.ReadKey(false).Key;
-    switch(ch)
-    {
-        case ConsoleKey.UpArrow:
-            maze.Move("up");
-            break;
-        case ConsoleKey.DownArrow:
-            maze.Move("down");
-            break;
-        case ConsoleKey.RightArrow:
-            maze.Move("right");
-            break;
-        case ConsoleKey.LeftArrow:
-            maze.Move("left");
-            break;
-    }
-    
-    // listen to key presses
-    // if (Console.KeyAvailable)
-    // {
-    //     var input = Console.ReadKey(true);
-    //
-    //     switch (input.Key)
-    //     {
-    //         // send key presses to the game if it's not paused
-    //         case ConsoleKey.UpArrow:
-    //         case ConsoleKey.DownArrow:
-    //         case ConsoleKey.LeftArrow:
-    //         case ConsoleKey.RightArrow:
-    //             if (!game.Paused)
-    //                 game.Input(input.Key);
-    //             break;
-    //
-    //         case ConsoleKey.P:
-    //             if (game.Paused)
-    //                 game.Resume();
-    //             else
-    //                 game.Pause();
-    //             break;
-    //
-    //         case ConsoleKey.Escape:
-    //             game.Stop();
-    //             return;
-    //     }
-    // }
-}
+
+Console.SetCursorPosition (playerOne.ScoreCursorPosition,22);
+Console.ForegroundColor = playerOne.Color;
+Console.Write($"{playerOne.Name}: {playerOne.Score}");
+Console.SetCursorPosition(playerTwo.ScoreCursorPosition,22);
+Console.ForegroundColor = playerTwo.Color;
+Console.WriteLine($"{playerTwo.Name}: {playerTwo.Score}");
+Console.ForegroundColor = ConsoleColor.Gray;
+
+game.Start(game, maze);

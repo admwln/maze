@@ -1,12 +1,13 @@
 using System.Runtime.CompilerServices;
 
 namespace ConsoleApp1;
-public class Maze(Player playerOne)
+public class Maze(Player playerOne, Player playerTwo)
 {
-    private Player PlayerOne { get; } = playerOne;
+    public Player PlayerOne { get; } = playerOne;
+    public Player PlayerTwo { get; } = playerTwo;
     static Int32[,] Grid { get; set; } = {
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-    {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,3},
+    {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,2,0},
     {0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0},
     {0,4,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0},
     {0,1,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,0,1,1,1,1,1,1,1,1,0},
@@ -25,7 +26,7 @@ public class Maze(Player playerOne)
     {0,4,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,4,1,0},
     {0,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
     {0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,4,1,0},
-    {0,2,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
+    {0,3,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 };
     private static readonly int RowCount = Grid.GetLength(0);
@@ -53,14 +54,14 @@ public class Maze(Player playerOne)
                      Console.BackgroundColor = ConsoleColor.Black;
                      
                  }
-                 else if (Grid[row, col] ==  2) // 2 = hero
+                 else if (Grid[row, col] ==  2) // 2 = PlayerOne
                  {
-                     Console.BackgroundColor = ConsoleColor.Green;
+                     Console.BackgroundColor = playerOne.Color;
                     
                  }
-                 else if (Grid[row, col] ==  3) // 3 = baddie
+                 else if (Grid[row, col] ==  3) // 3 = PlayerTwo
                  {
-                     Console.BackgroundColor = ConsoleColor.Red;
+                     Console.BackgroundColor = playerTwo.Color;
                      
                  }
                  else if (Grid[row, col] ==  4) // 4 = coin
@@ -74,7 +75,7 @@ public class Maze(Player playerOne)
          }
      }
 
-     private static void Redraw((int, int) path, (int, int) player)
+     private static void Redraw((int, int) path, Player player, (int, int) playerCoordinates)
      { 
          // Console.WriteLine($"Trying to redraw path at left:{path.Item2} and top {path.Item1}");
          var originalColor = Console.BackgroundColor;
@@ -84,46 +85,46 @@ public class Maze(Player playerOne)
          Console.SetCursorPosition(path.Item2, path.Item1);
          Console.Write(' ');
          
-         // Draw player
-         Console.SetCursorPosition(player.Item2, player.Item1);
-         Console.BackgroundColor = ConsoleColor.Green;
+         // Draw playerCoordinates
+         Console.SetCursorPosition(playerCoordinates.Item2, playerCoordinates.Item1);
+         Console.BackgroundColor = player.Color;
          Console.Write(' ');
          Console.SetCursorPosition(50,21);
          Console.BackgroundColor = originalColor;
      }
 
-     public void Move(string key)
+     public void Move(string key, Player player)
      {
-         // Get coordinates of player (2)
-         var coordinates = FindCoordinates(Grid, 2);
-         var newPlayerCoordinates = (999, 999);
+         // Get coordinates of player
+         var coordinates = FindCoordinates(player.GridValue);
+         var newCoordinates = (999, 999);
+       
          
-         if (key == "up")
-         {
-             newPlayerCoordinates = (coordinates.Item1 - 1, coordinates.Item2);
-         }
-
-         if (key == "down")
-         {
-             newPlayerCoordinates = (coordinates.Item1 + 1, coordinates.Item2);
-         }
-
-         if (key == "left")
-         {
-             newPlayerCoordinates = (coordinates.Item1, coordinates.Item2 - 1);
-         }
-
-         if (key == "right")
-         {
-             newPlayerCoordinates = (coordinates.Item1, coordinates.Item2 + 1);
-         }
+         // PlayerOne new coordinates
+         if (key == "up") newCoordinates = (coordinates.Item1 - 1, coordinates.Item2);
          
-         if (CheckForCoin(newPlayerCoordinates) || CheckForPath(newPlayerCoordinates))
+         if (key == "down") newCoordinates = (coordinates.Item1 + 1, coordinates.Item2);
+         
+         if (key == "left") newCoordinates = (coordinates.Item1, coordinates.Item2 - 1);
+
+         if (key == "right") newCoordinates = (coordinates.Item1, coordinates.Item2 + 1);
+         
+         // PlayerTwo new coordinates
+         if (key == "W") newCoordinates = (coordinates.Item1 - 1, coordinates.Item2);
+         
+         if (key == "S") newCoordinates = (coordinates.Item1 + 1, coordinates.Item2);
+         
+         if (key == "A") newCoordinates = (coordinates.Item1, coordinates.Item2 - 1);
+
+         if (key == "D") newCoordinates = (coordinates.Item1, coordinates.Item2 + 1);
+         
+         
+         if (CheckForCoin(player, newCoordinates) || CheckForPath(newCoordinates))
          {
-            Redraw(coordinates, newPlayerCoordinates);
+            Redraw(coordinates, player, newCoordinates);
             // Update grid
             Grid[coordinates.Item1, coordinates.Item2] = 1;
-            Grid[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2] = 2;
+            Grid[newCoordinates.Item1, newCoordinates.Item2] = player.GridValue;
          }
      }
 
@@ -140,7 +141,7 @@ public class Maze(Player playerOne)
          return false;
      }
 
-     private bool CheckForCoin((int, int) newPlayerCoordinates)
+     private bool CheckForCoin(Player player, (int, int) newPlayerCoordinates)
      {
          //Get value at coordinate
          var gridValue = Grid[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2];
@@ -148,15 +149,16 @@ public class Maze(Player playerOne)
          if (gridValue == 4)
          {
              // Add point to player
-             PlayerOne.AddToScore(10);
-             Console.SetCursorPosition(0,22);
-             Console.WriteLine($"{PlayerOne.Name}: {PlayerOne.Score}");
+             player.AddToScore(10);
+             Console.SetCursorPosition(player.ScoreCursorPosition,22);
+             Console.ForegroundColor = player.Color;
+             Console.WriteLine($"{player.Name}: {player.Score}");
              return true;
          }
          // False = no coin!   
          return false;
      }
-     private static (int, int) FindCoordinates(int[,] array, int value)
+     private static (int, int) FindCoordinates(int value)
      {
          var coordinates = (0, 0);
          // Loop for each row
@@ -165,7 +167,7 @@ public class Maze(Player playerOne)
              // Loop for each column
              for (var col = 0; col < ColCount; col++)
              {
-                 if (Grid[row, col] == 2)
+                 if (Grid[row, col] == value)
                  {
                      coordinates = (row, col);
                  }
