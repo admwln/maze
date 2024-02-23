@@ -1,6 +1,9 @@
+using System.Runtime.CompilerServices;
+
 namespace ConsoleApp1;
-internal class Maze()
+public class Maze(Player playerOne)
 {
+    private Player PlayerOne { get; } = playerOne;
     static Int32[,] Grid { get; set; } = {
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
     {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,3},
@@ -11,15 +14,15 @@ internal class Maze()
     {0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,0,1,1,1,1,0,1,1,1,0},
     {0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,1,0,0,0},
     {0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,0,1,1,0,0,0},
-    {0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0},
+    {0,4,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0},
     {0,1,1,0,1,0,1,1,1,1,1,0,0,0,0,0,0,0,1,0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,0,0,0,0},
     {0,0,0,0,1,0,1,0,0,0,1,1,1,1,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0},
-    {0,1,1,1,1,0,1,0,0,0,0,0,0,1,0,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1,0,0,0,0},
-    {0,0,0,0,0,0,1,0,1,1,1,1,1,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0},
-    {0,1,1,1,1,1,1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,1,1,1,1,1,1,0,1,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0},
+    {0,1,4,1,1,0,1,0,0,0,0,0,0,1,0,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1,0,0,0,0},
+    {0,0,0,0,0,0,1,0,1,1,4,1,1,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0},
+    {0,1,1,4,1,1,1,0,4,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,1,1,1,1,1,1,0,1,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0},
     {0,1,0,0,0,0,4,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,0,1,0,0,0,0,1,0,1,1,1,1,1,0,1,0,0,0,0,1,0,0,0,0,0},
     {0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0},
-    {0,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,4,1,0},
+    {0,4,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,4,1,0},
     {0,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
     {0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,4,1,0},
     {0,2,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
@@ -27,7 +30,7 @@ internal class Maze()
 };
     private static readonly int RowCount = Grid.GetLength(0);
     private static readonly int ColCount = Grid.GetLength(1);
-     public static void Draw()
+     public void Draw()
      {
          // Loop for each row
          for (var row = 0; row < RowCount; row++)
@@ -89,53 +92,39 @@ internal class Maze()
          Console.BackgroundColor = originalColor;
      }
 
-     public static void Move(string key)
+     public void Move(string key)
      {
          // Get coordinates of player (2)
          var coordinates = FindCoordinates(Grid, 2);
-         (int, int) newPlayerCoordinates;
+         var newPlayerCoordinates = (999, 999);
          
          if (key == "up")
          {
              newPlayerCoordinates = (coordinates.Item1 - 1, coordinates.Item2);
-             if (!CheckForPath(newPlayerCoordinates)) return;
-             Redraw(coordinates, newPlayerCoordinates);
-             // Update grid
-             Grid[coordinates.Item1, coordinates.Item2] = 1;
-             Grid[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2] = 2;
          }
 
          if (key == "down")
          {
              newPlayerCoordinates = (coordinates.Item1 + 1, coordinates.Item2);
-             if (!CheckForPath(newPlayerCoordinates)) return;
-             Redraw(coordinates, newPlayerCoordinates);
-             // Update grid
-             Grid[coordinates.Item1, coordinates.Item2] = 1;
-             Grid[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2] = 2;
          }
 
          if (key == "left")
          {
              newPlayerCoordinates = (coordinates.Item1, coordinates.Item2 - 1);
-             if (!CheckForPath(newPlayerCoordinates)) return;
-             Redraw(coordinates, newPlayerCoordinates);
-             // Update grid
-             Grid[coordinates.Item1, coordinates.Item2] = 1;
-             Grid[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2] = 2;
          }
 
          if (key == "right")
          {
              newPlayerCoordinates = (coordinates.Item1, coordinates.Item2 + 1);
-             if (!CheckForPath(newPlayerCoordinates)) return;
-             Redraw(coordinates, newPlayerCoordinates);
-             // Update grid
-             Grid[coordinates.Item1, coordinates.Item2] = 1;
-             Grid[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2] = 2;
          }
-
-         //Draw();
+         
+         if (CheckForCoin(newPlayerCoordinates) || CheckForPath(newPlayerCoordinates))
+         {
+            Redraw(coordinates, newPlayerCoordinates);
+            // Update grid
+            Grid[coordinates.Item1, coordinates.Item2] = 1;
+            Grid[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2] = 2;
+         }
      }
 
      private static bool CheckForPath((int, int) newPlayerCoordinates)
@@ -151,6 +140,22 @@ internal class Maze()
          return false;
      }
 
+     private bool CheckForCoin((int, int) newPlayerCoordinates)
+     {
+         //Get value at coordinate
+         var gridValue = Grid[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2];
+
+         if (gridValue == 4)
+         {
+             // Add point to player
+             PlayerOne.AddToScore(10);
+             Console.SetCursorPosition(0,22);
+             Console.WriteLine($"{PlayerOne.Name}: {PlayerOne.Score}");
+             return true;
+         }
+         // False = no coin!   
+         return false;
+     }
      private static (int, int) FindCoordinates(int[,] array, int value)
      {
          var coordinates = (0, 0);

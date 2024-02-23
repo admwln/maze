@@ -1,8 +1,16 @@
 ﻿using ConsoleApp1;
 
 var game = new Game();
+Console.Write("Player 1, choose your name: ");
+var name = Console.ReadLine();
+var playerOne = new Player(name);
+Console.WriteLine("Press Enter to play!");
+Console.ReadLine();
+var maze = new Maze(playerOne);
 game.Start();
-
+maze.Draw();
+Console.SetCursorPosition(0,22);
+Console.WriteLine($"{playerOne.Name}: {playerOne.Score}");
 while ( ! game.GameOver)
 {
     // Listen to keys
@@ -10,16 +18,16 @@ while ( ! game.GameOver)
     switch(ch)
     {
         case ConsoleKey.UpArrow:
-            Maze.Move("up");
+            maze.Move("up");
             break;
         case ConsoleKey.DownArrow:
-            Maze.Move("down");
+            maze.Move("down");
             break;
         case ConsoleKey.RightArrow:
-            Maze.Move("right");
+            maze.Move("right");
             break;
         case ConsoleKey.LeftArrow:
-            Maze.Move("left");
+            maze.Move("left");
             break;
     }
     

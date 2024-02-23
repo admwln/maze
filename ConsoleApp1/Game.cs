@@ -6,8 +6,8 @@ class Game
     public bool GameOver { get; private set; }
     public void Start()
     {
-        Console.WriteLine("Start");
-        Maze.Draw();
+        //Console.WriteLine("Start");
+        
         ScheduleNextTick();
     }
 
