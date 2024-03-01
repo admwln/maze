@@ -1,3 +1,5 @@
+namespace ConsoleApp1;
+
 class ScheduleTimer : IDisposable
 {
     public bool Aborted { get; private set; }
