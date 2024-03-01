@@ -11,7 +11,7 @@ var playerTwo = new Player(2, nameTwo, ConsoleColor.Magenta, 3, 0);
 
 Console.WriteLine("Press Enter to play!");
 Console.ReadLine();
-var maze = new Maze(playerOne, playerTwo);
+var maze = new Maze(playerOne, playerTwo, game);
 
 maze.Draw();
 
