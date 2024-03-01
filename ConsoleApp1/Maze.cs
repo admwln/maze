@@ -1,11 +1,14 @@
 using System.Runtime.CompilerServices;
 
 namespace ConsoleApp1;
-public class Maze(Player playerOne, Player playerTwo)
+public class Maze(Player playerOne, Player playerTwo, Game game)
 {
     public Player PlayerOne { get; } = playerOne;
     public Player PlayerTwo { get; } = playerTwo;
-    static int [,] Grid { get; set; } = {
+
+    private Game Game { get; } = game;
+
+    private static int [,] Grid { get; set; } = {
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
     {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,2,0},
     {0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0},
@@ -56,12 +59,12 @@ public class Maze(Player playerOne, Player playerTwo)
                  }
                  else if (Grid[row, col] ==  2) // 2 = PlayerOne
                  {
-                     Console.BackgroundColor = playerOne.Color;
+                     Console.BackgroundColor = PlayerOne.Color;
                     
                  }
                  else if (Grid[row, col] ==  3) // 3 = PlayerTwo
                  {
-                     Console.BackgroundColor = playerTwo.Color;
+                     Console.BackgroundColor = PlayerTwo.Color;
                      
                  }
                  else if (Grid[row, col] ==  4) // 4 = coin
@@ -75,7 +78,7 @@ public class Maze(Player playerOne, Player playerTwo)
                  }
                  else if (Grid[row, col] ==  6) // 6 = portal for playerTwo
                  {
-                     Console.BackgroundColor = playerTwo.Color;
+                     Console.BackgroundColor = PlayerTwo.Color;
                  }
                  
                  Console.Write(' '); // Write a space to actually change the background color
@@ -128,7 +131,7 @@ public class Maze(Player playerOne, Player playerTwo)
          if (key == "D") newCoordinates = (coordinates.Item1, coordinates.Item2 + 1);
          
          
-         if (CheckForCoin(player, newCoordinates) || CheckForPath(newCoordinates) || CheckForPortal(player, newCoordinates))
+         if (IsCoin(player, newCoordinates) || IsPath(newCoordinates) || IsPortal(player, newCoordinates))
          {
             Redraw(coordinates, player, newCoordinates);
             // Update grid
@@ -137,7 +140,7 @@ public class Maze(Player playerOne, Player playerTwo)
          }
      }
 
-     private static bool CheckForPath((int, int) newPlayerCoordinates)
+     private static bool IsPath((int, int) newPlayerCoordinates)
      {
          //Get value at coordinate
          var gridValue = Grid[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2];
@@ -150,26 +153,25 @@ public class Maze(Player playerOne, Player playerTwo)
          return false;
      }
 
-     private bool CheckForPortal(Player player, (int, int) newPlayerCoordinates)
+     private bool IsPortal(Player player, (int, int) newPlayerCoordinates)
      {
          //Get value at coordinate
          var gridValue = Grid[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2];
 
          if (gridValue == 5 && player.Id == 1)
          {
-             Console.WriteLine($"The winner is {player.Name}!");
+             Game.DeclareWinner(player);
              return true;
-             
          }
          if (gridValue == 6 && player.Id == 2)
          {
-             Console.WriteLine($"The winner is {player.Name}!");
+             Game.DeclareWinner(player);
              return true;
          }
          return false;
      }
 
-     private bool CheckForCoin(Player player, (int, int) newPlayerCoordinates)
+     private bool IsCoin(Player player, (int, int) newPlayerCoordinates)
      {
          //Get value at coordinate
          var gridValue = Grid[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2];
