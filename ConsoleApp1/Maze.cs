@@ -5,7 +5,7 @@ public class Maze(Player playerOne, Player playerTwo)
 {
     public Player PlayerOne { get; } = playerOne;
     public Player PlayerTwo { get; } = playerTwo;
-    static Int32[,] Grid { get; set; } = {
+    static int [,] Grid { get; set; } = {
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
     {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,2,0},
     {0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0},
@@ -13,15 +13,15 @@ public class Maze(Player playerOne, Player playerTwo)
     {0,1,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,0,1,1,1,1,1,1,4,1,0},
     {0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0},
     {0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,4,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,0,1,1,4,1,0,1,1,1,0},
-    {0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,1,0,0,0},
-    {0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,4,1,1,1,1,1,0,1,0,1,0,1,1,0,0,0},
-    {0,4,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0},
-    {0,1,1,0,1,0,1,1,1,1,1,0,0,0,0,0,0,0,1,0,1,4,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,4,1,1,1,0,1,0,1,0,0,0,0},
+    {0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,4,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,1,0,0,0},
+    {0,1,1,1,1,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,4,1,1,1,1,1,0,1,0,1,0,1,1,0,0,0},
+    {0,4,0,0,1,0,1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0},
+    {0,1,1,0,1,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,1,4,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,4,1,1,1,0,1,0,1,0,0,0,0},
     {0,0,0,0,1,0,1,0,0,0,1,1,1,1,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0},
     {0,1,4,1,1,0,1,0,0,0,0,0,0,1,0,1,1,1,1,1,1,1,0,1,0,1,4,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1,0,0,0,0},
     {0,0,0,0,0,0,1,0,1,1,4,1,1,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0},
     {0,1,1,4,1,1,1,0,4,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,1,1,1,1,1,1,0,1,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0},
-    {0,1,0,0,0,0,4,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,0,1,0,0,0,0,1,0,1,1,1,1,1,0,1,0,0,0,0,1,0,0,0,0,0},
+    {0,1,0,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,0,1,0,0,0,0,1,0,1,1,1,1,1,0,1,0,0,0,0,1,0,0,0,0,0},
     {0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0},
     {0,4,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,4,1,1,1,0,1,0,1,1,1,1,1,1,1,1,4,1,0},
     {0,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -69,6 +69,15 @@ public class Maze(Player playerOne, Player playerTwo)
                      Console.BackgroundColor = ConsoleColor.Yellow;
                      
                  }
+                 else if (Grid[row, col] ==  5) // 5 = portal for playerOne
+                 {
+                     Console.BackgroundColor = playerOne.Color;
+                 }
+                 else if (Grid[row, col] ==  6) // 6 = portal for playerTwo
+                 {
+                     Console.BackgroundColor = playerTwo.Color;
+                 }
+                 
                  Console.Write(' '); // Write a space to actually change the background color
                  Console.BackgroundColor = originalColor;
              }
@@ -119,7 +128,7 @@ public class Maze(Player playerOne, Player playerTwo)
          if (key == "D") newCoordinates = (coordinates.Item1, coordinates.Item2 + 1);
          
          
-         if (CheckForCoin(player, newCoordinates) || CheckForPath(newCoordinates))
+         if (CheckForCoin(player, newCoordinates) || CheckForPath(newCoordinates) || CheckForPortal(player, newCoordinates))
          {
             Redraw(coordinates, player, newCoordinates);
             // Update grid
@@ -141,6 +150,25 @@ public class Maze(Player playerOne, Player playerTwo)
          return false;
      }
 
+     private bool CheckForPortal(Player player, (int, int) newPlayerCoordinates)
+     {
+         //Get value at coordinate
+         var gridValue = Grid[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2];
+
+         if (gridValue == 5 && player.Id == 1)
+         {
+             Console.WriteLine($"The winner is {player.Name}!");
+             return true;
+             
+         }
+         if (gridValue == 6 && player.Id == 2)
+         {
+             Console.WriteLine($"The winner is {player.Name}!");
+             return true;
+         }
+         return false;
+     }
+
      private bool CheckForCoin(Player player, (int, int) newPlayerCoordinates)
      {
          //Get value at coordinate
@@ -150,9 +178,10 @@ public class Maze(Player playerOne, Player playerTwo)
          {
              // Add point to player
              player.AddToScore(10);
-             Console.SetCursorPosition(player.ScoreCursorPosition,22);
-             Console.ForegroundColor = player.Color;
-             Console.WriteLine($"{player.Name}: {player.Score}");
+             if (player.Score == 100)
+             {
+                 SpawnPortal(player);
+             }
              return true;
          }
          // False = no coin!   
@@ -175,5 +204,27 @@ public class Maze(Player playerOne, Player playerTwo)
          }
 
          return coordinates;
+     }
+
+     private void SpawnPortal(Player player)
+     {
+         //Spawn portal
+         var rnd = new Random();
+         int row = rnd.Next(2, 19);
+         int col = rnd.Next(1, 49);
+         if (player.Id == 1)
+         {
+            Grid[row, col] = 5;
+         }
+         if (player.Id == 2)
+         {
+            Grid[row, col] = 6;
+         }
+         // Add extra paths around portal
+         Grid[row - 1, col] = 1;
+         Grid[row + 1, col] = 1;
+         Grid[row, col + 1] = 1;
+         Grid[row, col - 1] = 1;
+         Draw();
      }
 }

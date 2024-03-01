@@ -4,10 +4,10 @@ var game = new Game();
 
 Console.Write("Player 1, choose your name: ");
 var nameOne = Console.ReadLine();
-var playerOne = new Player(nameOne, ConsoleColor.Cyan, 2, 25);
+var playerOne = new Player(1, nameOne, ConsoleColor.Cyan, 2, 25);
 Console.Write("Player 2, choose your name: ");
 var nameTwo = Console.ReadLine();
-var playerTwo = new Player(nameTwo, ConsoleColor.Magenta, 3, 0);
+var playerTwo = new Player(2, nameTwo, ConsoleColor.Magenta, 3, 0);
 
 Console.WriteLine("Press Enter to play!");
 Console.ReadLine();
