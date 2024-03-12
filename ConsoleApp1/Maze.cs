@@ -1,5 +1,3 @@
-using System.Runtime.CompilerServices;
-
 namespace ConsoleApp1;
 public class Maze(Player playerOne, Player playerTwo, Game game)
 {
@@ -8,32 +6,10 @@ public class Maze(Player playerOne, Player playerTwo, Game game)
 
     private Game Game { get; } = game;
 
-    private static int [,] Grid { get; set; } = {
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-    {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,2,0},
-    {0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0},
-    {0,4,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0},
-    {0,1,0,0,1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,0,1,1,1,1,1,1,4,1,0},
-    {0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0},
-    {0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,4,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,0,1,1,4,1,0,1,1,1,0},
-    {0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,4,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,1,0,0,0},
-    {0,1,1,1,1,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,4,1,1,1,1,1,0,1,0,1,0,1,1,0,0,0},
-    {0,4,0,0,1,0,1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0},
-    {0,1,1,0,1,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,1,4,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,4,1,1,1,0,1,0,1,0,0,0,0},
-    {0,0,0,0,1,0,1,0,0,0,1,1,1,1,0,0,0,0,1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0},
-    {0,1,4,1,1,0,1,0,0,0,0,0,0,1,0,1,1,1,1,1,1,1,0,1,0,1,4,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,1,0,0,0,0},
-    {0,0,0,0,0,0,1,0,1,1,4,1,1,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0},
-    {0,1,1,4,1,1,1,0,4,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,1,1,1,1,1,1,0,1,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0},
-    {0,1,0,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,0,1,0,0,0,0,1,0,1,1,1,1,1,0,1,0,0,0,0,1,0,0,0,0,0},
-    {0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0},
-    {0,4,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,4,1,1,1,0,1,0,1,1,1,1,1,1,1,1,4,1,0},
-    {0,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
-    {0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,4,1,1,1,1,1,1,1,1,1,1,1,1,4,1,0},
-    {0,3,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-};
-    private static readonly int RowCount = Grid.GetLength(0);
-    private static readonly int ColCount = Grid.GetLength(1);
+    private static readonly Grid Grid = new();
+    
+    private static readonly int RowCount = Grid.Arr.GetLength(0);
+    private static readonly int ColCount = Grid.Arr.GetLength(1);
      public void Draw()
      {
          // Loop for each row
@@ -47,36 +23,36 @@ public class Maze(Player playerOne, Player playerTwo, Game game)
                  Console.SetCursorPosition(col, row);
          
          
-                 if (Grid[row, col] ==  0) // 0 = walls
+                 if (Grid.Arr[row, col] ==  0) // 0 = walls
                  {
                      Console.BackgroundColor = ConsoleColor.Gray;
                     
                  }
-                 else if (Grid[row, col] ==  1) // 1 = path
+                 else if (Grid.Arr[row, col] ==  1) // 1 = path
                  {
                      Console.BackgroundColor = ConsoleColor.Black;
                      
                  }
-                 else if (Grid[row, col] ==  2) // 2 = PlayerOne
+                 else if (Grid.Arr[row, col] ==  2) // 2 = PlayerOne
                  {
                      Console.BackgroundColor = PlayerOne.Color;
                     
                  }
-                 else if (Grid[row, col] ==  3) // 3 = PlayerTwo
+                 else if (Grid.Arr[row, col] ==  3) // 3 = PlayerTwo
                  {
                      Console.BackgroundColor = PlayerTwo.Color;
                      
                  }
-                 else if (Grid[row, col] ==  4) // 4 = coin
+                 else if (Grid.Arr[row, col] ==  4) // 4 = coin
                  {
                      Console.BackgroundColor = ConsoleColor.Yellow;
                      
                  }
-                 else if (Grid[row, col] ==  5) // 5 = portal for playerOne
+                 else if (Grid.Arr[row, col] ==  5) // 5 = portal for playerOne
                  {
-                     Console.BackgroundColor = playerOne.Color;
+                     Console.BackgroundColor = PlayerOne.Color;
                  }
-                 else if (Grid[row, col] ==  6) // 6 = portal for playerTwo
+                 else if (Grid.Arr[row, col] ==  6) // 6 = portal for playerTwo
                  {
                      Console.BackgroundColor = PlayerTwo.Color;
                  }
@@ -135,15 +111,15 @@ public class Maze(Player playerOne, Player playerTwo, Game game)
          {
             Redraw(coordinates, player, newCoordinates);
             // Update grid
-            Grid[coordinates.Item1, coordinates.Item2] = 1;
-            Grid[newCoordinates.Item1, newCoordinates.Item2] = player.GridValue;
+            Grid.Arr[coordinates.Item1, coordinates.Item2] = 1;
+            Grid.Arr[newCoordinates.Item1, newCoordinates.Item2] = player.GridValue;
          }
      }
 
      private static bool IsPath((int, int) newPlayerCoordinates)
      {
          //Get value at coordinate
-         var gridValue = Grid[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2];
+         var gridValue = Grid.Arr[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2];
 
          if (gridValue == 1)
          {
@@ -156,7 +132,7 @@ public class Maze(Player playerOne, Player playerTwo, Game game)
      private bool IsPortal(Player player, (int, int) newPlayerCoordinates)
      {
          //Get value at coordinate
-         var gridValue = Grid[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2];
+         var gridValue = Grid.Arr[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2];
 
          if (gridValue == 5 && player.Id == 1)
          {
@@ -174,13 +150,13 @@ public class Maze(Player playerOne, Player playerTwo, Game game)
      private bool IsCoin(Player player, (int, int) newPlayerCoordinates)
      {
          //Get value at coordinate
-         var gridValue = Grid[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2];
+         var gridValue = Grid.Arr[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2];
 
          if (gridValue == 4)
          {
              // Add point to player
-             player.AddToScore(10);
-             if (player.Score == 100)
+             player.AddToScore(1);
+             if (player.Score == 10)
              {
                  SpawnPortal(player);
              }
@@ -198,7 +174,7 @@ public class Maze(Player playerOne, Player playerTwo, Game game)
              // Loop for each column
              for (var col = 0; col < ColCount; col++)
              {
-                 if (Grid[row, col] == value)
+                 if (Grid.Arr[row, col] == value)
                  {
                      coordinates = (row, col);
                  }
@@ -212,21 +188,19 @@ public class Maze(Player playerOne, Player playerTwo, Game game)
      {
          //Spawn portal
          var rnd = new Random();
-         int row = rnd.Next(2, 19);
-         int col = rnd.Next(1, 49);
-         if (player.Id == 1)
+         var row = rnd.Next(1, 21);
+         var col = rnd.Next(1, 49);
+         Grid.Arr[row, col] = player.Id switch
          {
-            Grid[row, col] = 5;
-         }
-         if (player.Id == 2)
-         {
-            Grid[row, col] = 6;
-         }
+             1 => 5,
+             2 => 6,
+             _ => Grid.Arr[row, col]
+         };
          // Add extra paths around portal
-         Grid[row - 1, col] = 1;
-         Grid[row + 1, col] = 1;
-         Grid[row, col + 1] = 1;
-         Grid[row, col - 1] = 1;
+         Grid.Arr[row - 1, col] = 1;
+         Grid.Arr[row + 1, col] = 1;
+         Grid.Arr[row, col + 1] = 1;
+         Grid.Arr[row, col - 1] = 1;
          Draw();
      }
 }

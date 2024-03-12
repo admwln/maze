@@ -2,7 +2,7 @@ namespace ConsoleApp1;
 
 public class Game
 {
-    ScheduleTimer? _timer;
+    private ScheduleTimer? _timer;
     public bool Paused { get; private set; }
     private bool GameOver { get; set; }
     public void Start(Game game, Maze maze)
@@ -92,8 +92,8 @@ public class Game
     {
         GameOver = true;
         
-        var longLine = new String(' ', 50);
-        Console.BackgroundColor = ConsoleColor.Gray;
+        var longLine = new string(' ', 50);
+        Console.BackgroundColor = winner.Color;
         Console.SetCursorPosition(0, 8);
         Console.WriteLine(longLine);Console.SetCursorPosition(0, 13);
         Console.WriteLine(longLine);
