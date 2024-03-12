@@ -1,11 +1,38 @@
 ﻿using ConsoleApp1;
 
 var game = new Game();
-
-Console.Write("Player 1, choose your name: ");
+var originalBgColor = Console.BackgroundColor;
+Console.BackgroundColor = ConsoleColor.Black;
+Console.ForegroundColor = ConsoleColor.Green;
+Console.WriteLine("-----The Amazing Maze Race-----");
+Console.BackgroundColor = originalBgColor;
+Console.ForegroundColor = ConsoleColor.White;
+Console.WriteLine("");
+Console.Write("Collect 10 yellow coins: ");
+Console.BackgroundColor = ConsoleColor.Yellow;
+Console.WriteLine(" ");
+Console.BackgroundColor = originalBgColor;
+Console.Write("Your very own portal will appear: ");
+Console.BackgroundColor = ConsoleColor.Cyan;
+Console.Write(" ");
+Console.BackgroundColor = originalBgColor;
+Console.Write(" or ");
+Console.BackgroundColor = ConsoleColor.Magenta;
+Console.WriteLine(" ");
+Console.BackgroundColor = originalBgColor;
+Console.WriteLine("");
+Console.WriteLine("Use your portal to escape the maze and win the game!");
+Console.WriteLine("");
+Console.ForegroundColor = ConsoleColor.Cyan;
+Console.Write("Player 1 ");
+Console.ForegroundColor = ConsoleColor.White;
+Console.Write("(arrow keys), choose your name: ");
 var nameOne = Console.ReadLine();
 var playerOne = new Player(1, nameOne, ConsoleColor.Cyan, 2, 25);
-Console.Write("Player 2, choose your name: ");
+Console.ForegroundColor = ConsoleColor.Magenta;
+Console.Write("Player 2 ");
+Console.ForegroundColor = ConsoleColor.White;
+Console.Write("(WASD), choose your name: ");
 var nameTwo = Console.ReadLine();
 var playerTwo = new Player(2, nameTwo, ConsoleColor.Magenta, 3, 0);
 
