@@ -7,8 +7,6 @@ public class Game
     private bool GameOver { get; set; }
     public void Start(Game game, Maze maze)
     {
-        //Console.WriteLine("Start");
-        
         ScheduleNextTick();
         while (!game.GameOver)
         {
@@ -107,5 +105,15 @@ public class Game
         Console.ForegroundColor = winner.Color;
         Console.SetCursorPosition(15, 10);
         Console.WriteLine($"The winner is {winner.Name}!!!");
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.SetCursorPosition(13, 11);
+        Console.Write("Press Enter to play again!");
+        Console.ReadLine();
+        // Clear console and reset cursor
+        Console.Clear();
+        Console.SetCursorPosition(0, 0);
+        GameOver = false;
+        Main.RestartGame();
     }
+       
 }

@@ -1,22 +1,22 @@
 namespace ConsoleApp1;
-public class Maze(Player playerOne, Player playerTwo, Game game)
+public class Maze(Player playerOne, Player playerTwo, Game game, Grid grid)
 {
     public Player PlayerOne { get; } = playerOne;
     public Player PlayerTwo { get; } = playerTwo;
 
     private Game Game { get; } = game;
 
-    private static readonly Grid Grid = new();
-    
-    private static readonly int RowCount = Grid.Arr.GetLength(0);
-    private static readonly int ColCount = Grid.Arr.GetLength(1);
+    private Grid Grid { get; } = grid;
+
+    private readonly int _rowCount = grid.Arr.GetLength(0);
+    private readonly int _colCount = grid.Arr.GetLength(1);
      public void Draw()
      {
          // Loop for each row
-         for (var row = 0; row < RowCount; row++)
+         for (var row = 0; row < _rowCount; row++)
          {
              // Loop for each column
-             for (var col = 0; col < ColCount; col++)
+             for (var col = 0; col < _colCount; col++)
              {
                  var originalColor = Console.BackgroundColor;
                  
@@ -116,7 +116,7 @@ public class Maze(Player playerOne, Player playerTwo, Game game)
          }
      }
 
-     private static bool IsPath((int, int) newPlayerCoordinates)
+     private bool IsPath((int, int) newPlayerCoordinates)
      {
          //Get value at coordinate
          var gridValue = Grid.Arr[newPlayerCoordinates.Item1, newPlayerCoordinates.Item2];
@@ -165,14 +165,14 @@ public class Maze(Player playerOne, Player playerTwo, Game game)
          // False = no coin!   
          return false;
      }
-     private static (int, int) FindCoordinates(int value)
+     private (int, int) FindCoordinates(int value)
      {
          var coordinates = (0, 0);
          // Loop for each row
-         for (var row = 0; row < RowCount; row++)
+         for (var row = 0; row < _rowCount; row++)
          {
              // Loop for each column
-             for (var col = 0; col < ColCount; col++)
+             for (var col = 0; col < _colCount; col++)
              {
                  if (Grid.Arr[row, col] == value)
                  {
@@ -188,8 +188,8 @@ public class Maze(Player playerOne, Player playerTwo, Game game)
      {
          //Spawn portal
          var rnd = new Random();
-         var row = rnd.Next(1, 21);
-         var col = rnd.Next(1, 49);
+         var row = rnd.Next(2, 20);
+         var col = rnd.Next(2, 48);
          Grid.Arr[row, col] = player.Id switch
          {
              1 => 5,
