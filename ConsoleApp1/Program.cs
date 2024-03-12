@@ -1,3 +1,3 @@
 ﻿using ConsoleApp1;
 
-Main.RestartGame();
+Game.Restart();
