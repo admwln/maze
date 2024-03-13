@@ -2,7 +2,7 @@ namespace ConsoleApp1;
 
 public class Game
 {
-    private bool GameOver { get; set; }
+    public bool GameOver { get; set; }
     
     public static void Restart()
     {
@@ -121,12 +121,22 @@ public class Game
         Console.ForegroundColor = winner.Color;
         Console.SetCursorPosition(15, 10);
         Console.WriteLine($"The winner is {winner.Name}!!!");
-        Thread.Sleep(1000);
+        Console.SetCursorPosition(0, 0);
+        Thread.Sleep(2000);
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.White;
-        Console.SetCursorPosition(13, 11);
-        Console.Write("Press Enter to play again!");
-        Console.ReadLine();
-        Restart();
+        Console.WriteLine("Press Y to play again");
+        Console.WriteLine("");
+        Console.Write("Press N to quit: ");
+        var input = Console.ReadLine();
+        if (input!.ToUpper()[0] == 'Y')
+        {
+            Restart();
+            return;
+        }
+        Console.Clear();
+        Console.SetCursorPosition(15, 10);
+        Console.WriteLine("Thanks for playing!");
+        Console.SetCursorPosition(0, 0);
     }
 }

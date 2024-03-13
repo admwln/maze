@@ -63,9 +63,10 @@ public class Maze(Player playerOne, Player playerTwo, Game game, Grid grid)
          }
      }
 
-     private static void Redraw((int, int) path, Player player, (int, int) playerCoordinates)
-     { 
-         // Console.WriteLine($"Trying to redraw path at left:{path.Item2} and top {path.Item1}");
+     private void Redraw((int, int) path, Player player, (int, int) playerCoordinates)
+     {
+         if (Game.GameOver) return;
+         
          var originalColor = Console.BackgroundColor;
          
          // Draw path
@@ -79,31 +80,26 @@ public class Maze(Player playerOne, Player playerTwo, Game game, Grid grid)
          Console.Write(' ');
          Console.SetCursorPosition(50,21);
          Console.BackgroundColor = originalColor;
+     
      }
 
      public void Move(string key, Player player)
      {
+         if (Game.GameOver) return;
          // Get coordinates of player
          var coordinates = FindCoordinates(player.GridValue);
          var newCoordinates = (999, 999);
-       
          
          // PlayerOne new coordinates
          if (key == "up") newCoordinates = (coordinates.Item1 - 1, coordinates.Item2);
-         
          if (key == "down") newCoordinates = (coordinates.Item1 + 1, coordinates.Item2);
-         
          if (key == "left") newCoordinates = (coordinates.Item1, coordinates.Item2 - 1);
-
          if (key == "right") newCoordinates = (coordinates.Item1, coordinates.Item2 + 1);
          
          // PlayerTwo new coordinates
          if (key == "W") newCoordinates = (coordinates.Item1 - 1, coordinates.Item2);
-         
          if (key == "S") newCoordinates = (coordinates.Item1 + 1, coordinates.Item2);
-         
          if (key == "A") newCoordinates = (coordinates.Item1, coordinates.Item2 - 1);
-
          if (key == "D") newCoordinates = (coordinates.Item1, coordinates.Item2 + 1);
          
          
