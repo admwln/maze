@@ -2,12 +2,14 @@ namespace ConsoleApp1;
 
 public class Game
 {
-    //private ScheduleTimer? _timer;
-    //public bool Paused { get; private set; }
     private bool GameOver { get; set; }
     
     public static void Restart()
     {
+        // Clear console and reset cursor
+        Console.Clear();
+        Console.SetCursorPosition(0, 0);
+        
         var game = new Game();
         var originalBgColor = Console.BackgroundColor;
         Console.ForegroundColor = ConsoleColor.Green;
@@ -57,16 +59,15 @@ public class Game
         Console.WriteLine($"{playerTwo.Name}: {playerTwo.Score}");
         Console.ForegroundColor = ConsoleColor.Gray;
        
-        game.Start(game, maze); 
+        game.Start(maze); 
     }
 
-    private void Start(Game game, Maze maze)
+    private void Start(Maze maze)
     {
-        //ScheduleNextTick();
-        while (!game.GameOver)
+        GameOver = false;
+        while (!GameOver)
         {
             // Listen to keys
-            //var ch = Console.ReadKey(false).Key;
             var keyInfo = Console.ReadKey(true);
             
             switch (keyInfo.Key)
@@ -120,53 +121,12 @@ public class Game
         Console.ForegroundColor = winner.Color;
         Console.SetCursorPosition(15, 10);
         Console.WriteLine($"The winner is {winner.Name}!!!");
+        Thread.Sleep(1000);
+        Console.Clear();
         Console.ForegroundColor = ConsoleColor.White;
         Console.SetCursorPosition(13, 11);
         Console.Write("Press Enter to play again!");
         Console.ReadLine();
-        // Clear console and reset cursor
-        Console.Clear();
-        Console.SetCursorPosition(0, 0);
-        GameOver = false;
         Restart();
     }
-    // public void Pause()
-    // {
-    //     Console.WriteLine("Pause");
-    //     Paused = true;
-    //     _timer!.Pause();
-    // }
-    //
-    // public void Resume()
-    // {
-    //     Console.WriteLine("Resume");
-    //     Paused = false;
-    //     _timer!.Resume();
-    // }
-    //
-    // public void Stop()
-    // {
-    //     Console.WriteLine("Stop");
-    //     GameOver = true;
-    // }
-
-    // public void Input(ConsoleKey key)
-    // {
-    //     //Console.WriteLine($"Player pressed key: {key}");
-    //     
-    //     //Move player and redraw maze
-    //     //Maze.Move(key);
-    // }
-
-    // void Tick()
-    // {
-    //     //Console.WriteLine("Tick");
-    //     ScheduleNextTick();
-    // }
-
-    // void ScheduleNextTick()
-    // {
-    //     // the game will automatically update itself every half a second, adjust as needed
-    //     //_timer = new ScheduleTimer(500, Tick);
-    // }
 }
