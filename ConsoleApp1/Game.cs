@@ -1,9 +1,7 @@
 namespace ConsoleApp1;
-
 public class Game
 {
     public bool GameOver { get; private set; }
-    
     public static void Restart()
     {
         // Clear console and reset cursor
@@ -70,7 +68,6 @@ public class Game
         {
             // Listen to keys
             var keyInfo = Console.ReadKey(true);
-            
             switch (keyInfo.Key)
             {
                 // PlayerOne
@@ -118,17 +115,19 @@ public class Game
             Console.SetCursorPosition(0, 9+i);
             Console.WriteLine(longLine);
         }
-        
         Console.ForegroundColor = winner.Color;
         Console.SetCursorPosition(15, 10);
+        
         Console.WriteLine($"The winner is {winner.Name}!!!");
         Console.SetCursorPosition(0, 0);
         Thread.Sleep(2000);
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.White;
+        
         Console.WriteLine("Press Y to play again");
         Console.WriteLine("");
         Console.Write("Press N to quit: ");
+        
         var input = Console.ReadLine();
         if (input!.ToUpper()[0] == 'Y')
         {
@@ -137,6 +136,7 @@ public class Game
         }
         Console.Clear();
         Console.SetCursorPosition(15, 10);
+        
         Console.WriteLine("Thanks for playing!");
         Console.SetCursorPosition(0, 0);
     }

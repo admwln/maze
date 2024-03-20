@@ -3,9 +3,7 @@ public class Maze(Player playerOne, Player playerTwo, Game game, Grid grid)
 {
     public Player PlayerOne { get; } = playerOne;
     public Player PlayerTwo { get; } = playerTwo;
-
     private Game Game { get; } = game;
-
     private Grid Grid { get; } = grid;
 
     private readonly int _rowCount = grid.Arr.GetLength(0);
@@ -19,34 +17,27 @@ public class Maze(Player playerOne, Player playerTwo, Game game, Grid grid)
              for (var col = 0; col < _colCount; col++)
              {
                  var originalColor = Console.BackgroundColor;
-                 
                  Console.SetCursorPosition(col, row);
-         
-         
+                 
                  if (Grid.Arr[row, col] ==  0) // 0 = walls
                  {
                      Console.BackgroundColor = ConsoleColor.Gray;
-                    
                  }
                  else if (Grid.Arr[row, col] ==  1) // 1 = path
                  {
                      Console.BackgroundColor = ConsoleColor.Black;
-                     
                  }
                  else if (Grid.Arr[row, col] ==  2) // 2 = PlayerOne
                  {
                      Console.BackgroundColor = PlayerOne.Color;
-                    
                  }
                  else if (Grid.Arr[row, col] ==  3) // 3 = PlayerTwo
                  {
                      Console.BackgroundColor = PlayerTwo.Color;
-                     
                  }
                  else if (Grid.Arr[row, col] ==  4) // 4 = coin
                  {
                      Console.BackgroundColor = ConsoleColor.Yellow;
-                     
                  }
                  else if (Grid.Arr[row, col] ==  5) // 5 = portal for playerOne
                  {
@@ -56,7 +47,6 @@ public class Maze(Player playerOne, Player playerTwo, Game game, Grid grid)
                  {
                      Console.BackgroundColor = PlayerTwo.Color;
                  }
-                 
                  Console.Write(' '); // Write a space to actually change the background color
                  Console.BackgroundColor = originalColor;
              }
@@ -80,7 +70,6 @@ public class Maze(Player playerOne, Player playerTwo, Game game, Grid grid)
          Console.Write(' ');
          Console.SetCursorPosition(50,21);
          Console.BackgroundColor = originalColor;
-     
      }
 
      public void Update(string key, Player player)
@@ -101,7 +90,6 @@ public class Maze(Player playerOne, Player playerTwo, Game game, Grid grid)
          if (key == "S") newCoordinates = (coordinates.Item1 + 1, coordinates.Item2);
          if (key == "A") newCoordinates = (coordinates.Item1, coordinates.Item2 - 1);
          if (key == "D") newCoordinates = (coordinates.Item1, coordinates.Item2 + 1);
-         
          
          if (IsCoin(player, newCoordinates) || IsPath(newCoordinates) || IsPortal(player, newCoordinates))
          {
@@ -176,7 +164,6 @@ public class Maze(Player playerOne, Player playerTwo, Game game, Grid grid)
                  }
              }
          }
-
          return coordinates;
      }
 
