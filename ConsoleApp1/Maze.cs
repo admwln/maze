@@ -83,7 +83,7 @@ public class Maze(Player playerOne, Player playerTwo, Game game, Grid grid)
      
      }
 
-     public void Move(string key, Player player)
+     public void Update(string key, Player player)
      {
          if (Game.GameOver) return;
          // Get coordinates of player

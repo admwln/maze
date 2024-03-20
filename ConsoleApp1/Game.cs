@@ -2,7 +2,7 @@ namespace ConsoleApp1;
 
 public class Game
 {
-    public bool GameOver { get; set; }
+    public bool GameOver { get; private set; }
     
     public static void Restart()
     {
@@ -10,7 +10,6 @@ public class Game
         Console.Clear();
         Console.SetCursorPosition(0, 0);
         
-        var game = new Game();
         var originalBgColor = Console.BackgroundColor;
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("-----The Amazing Maze Race-----");
@@ -47,6 +46,8 @@ public class Game
        
         Console.WriteLine("Press Enter to play!");
         Console.ReadLine();
+        
+        var game = new Game();
         var maze = new Maze(playerOne, playerTwo, game, new Grid());
        
         maze.Draw();
@@ -74,29 +75,29 @@ public class Game
             {
                 // PlayerOne
                 case ConsoleKey.UpArrow:
-                    maze.Move("up", maze.PlayerOne);
+                    maze.Update("up", maze.PlayerOne);
                     break;
                 case ConsoleKey.DownArrow:
-                    maze.Move("down", maze.PlayerOne);
+                    maze.Update("down", maze.PlayerOne);
                     break;
                 case ConsoleKey.RightArrow:
-                    maze.Move("right", maze.PlayerOne);
+                    maze.Update("right", maze.PlayerOne);
                     break;
                 case ConsoleKey.LeftArrow:
-                    maze.Move("left", maze.PlayerOne);
+                    maze.Update("left", maze.PlayerOne);
                     break;
                 // PlayerTwo
                 case ConsoleKey.W:
-                    maze.Move("W", maze.PlayerTwo);
+                    maze.Update("W", maze.PlayerTwo);
                     break;
                 case ConsoleKey.S:
-                    maze.Move("S", maze.PlayerTwo);
+                    maze.Update("S", maze.PlayerTwo);
                     break;
                 case ConsoleKey.A:
-                    maze.Move("A", maze.PlayerTwo);
+                    maze.Update("A", maze.PlayerTwo);
                     break;
                 case ConsoleKey.D:
-                    maze.Move("D", maze.PlayerTwo);
+                    maze.Update("D", maze.PlayerTwo);
                     break;
             }
         }
