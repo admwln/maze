@@ -12,3 +12,7 @@ A two-player console game.
 ## Installation
 
 Clone the repository: `git clone https://github.com/admwln/maze.git`
+
+## Usage
+
+- Use external console to run the application.
